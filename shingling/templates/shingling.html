@@ -1,0 +1,94 @@
+{% extends 'silpa.html'%}
+{% block modulescript %}
+<script type="text/javascript">
+  $(document).ready(function(){
+  $("form").submit(function(event){
+  event.preventDefault();
+  fetch(this)
+  });
+
+  });
+
+  function fetch(form)
+  {
+  var text= form.text.value;
+  var n= form.n.value;
+  var jsonRequest = {
+  "method" :  "shingling.wshingling",
+  "params" : [text,n],
+  "id" : ""
+  };
+
+  $.ajax({
+  type: "POST",
+  contentType: "application/json; charset=utf-8",
+  url: "JSONRPC",
+  data: JSON.stringify(jsonRequest),
+  dataType: "json",
+  beforeSend:function(){
+  $("#error").hide();
+  $("#result").hide();
+  $('#progress') .html("Please Wait...");
+
+  },
+
+  success: function(msg) {
+  $('#progress').hide();
+  var resultObj = eval(msg.result);
+  if(resultObj.length != 0){
+  $('#result').html("<ul id='list'></ul>").show();
+  $.each(resultObj, function(index,item){
+  $('#list').append($( "<li>" +"<span class='label label-info'>" + item + "</span>" +"</li>" ));
+  });
+  }
+  },
+  error: function(msg) {
+  $("#error").html("Something went wrong...").show();
+  $('#progress') .hide();
+
+  }
+  });
+  }
+</script>
+
+{% endblock %}
+
+{% block content%}
+<div class="well">  <h2>Indic W-shingling Library</h2></hr>
+    <h4>What is W-shingling?</h4>
+    <p>
+      a w-shingling is a set of unique "shingles"—contiguous subsequences of tokens in a document—that can be used to gauge the similarity of two documents. The w denotes the number of tokens in each shingle in the set.
+    </p>
+    <!-- <p>If you want to use this library in your program , you may refer the JSON-RPC based <a href="apis.html">API documentation.</a></p> -->
+    <a href="http://en.wikipedia.org/wiki/W-shingling">Read more about W-shingling</a>
+    <h4>Supported Languages</h4>
+    <p>English, Hindi, Malayalam, Kannada,  Bengali</p>
+    <p>Enter the text for  getting the w-shingling below.
+      Language of each  word will be detected.    You can give the text in any language and even with mixed language.
+    </p>
+    <form >
+      <p align="center">
+        <input type="text"  name='text' id='text' value="a rose is a rose is a rose" style="width:25em;"></textarea>
+</p><p align="center">
+  W : <input type="text"  name='n' id='n' value ="2" style="width:5em;"></textarea>
+<input  type="submit" class="btn" id="ngram" value="Submit"  name="action" style="width:12em;"/>
+</p>
+</form>
+<hr/>
+<div class="hide alert alert-info " id="progress"></div>
+<div class="hide alert alert-success " id="successmessage"></div>
+<div class="hide alert alert-error " id="error"></div>
+<div class="hide " id="result"></div></div>
+<div class="well"><h3>Python Wshingling API</h3>
+This service provides indic w-shingling libraries
+<ul>
+  <li>Method: modules.Shingling.wshingling
+    <ul>
+      <li>arg1 : the  sentence</li>
+      <li>w :  w of w-shingling (Optional)</li>
+      <li>Return : The w-shingling for the sentence</li>
+    </ul></div>
+  </li>
+</ul>
+
+  {% endblock %}
