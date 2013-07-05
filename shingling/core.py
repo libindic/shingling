@@ -25,7 +25,8 @@ import ngram
 
 
 class Shingling:
-   def wshingling(self,text, window_size=4):
+
+    def wshingling(self, text, window_size=4):
         window_size = int(window_size)
         s = ngram.getInstance()
         ngrams = s.wordNgram(text, window_size)
