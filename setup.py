@@ -20,6 +20,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     setup_requires=['setuptools-git'],
-    install_requires=['setuptools', 'silpa_common'],
+    install_requires=['setuptools', 'silpa_common','indicngram'],
     zip_safe=False,
 )

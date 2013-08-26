@@ -21,14 +21,14 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 from silpa_common import *
-import ngram
+import indicngram
 
 
 class Shingling:
 
     def wshingling(self, text, window_size=4):
         window_size = int(window_size)
-        s = ngram.getInstance()
+        s = indicngram.getInstance()
         ngrams = s.wordNgram(text, window_size)
         size = len(ngrams)
         shingling = []
