@@ -25,8 +25,17 @@ import indicngram
 
 
 class Shingling:
-
+    """
+    The shingling class. Instantiate to get access to the  methods.
+    """
     def wshingling(self, text, window_size=4):
+        """
+        :param text: Text to be split into shingles.
+        :type text: str.
+        :param window_size: the window size for splitting the shingles.
+        :type: int.
+        :returns: text split into shingles.
+                """
         window_size = int(window_size)
         s = indicngram.getInstance()
         ngrams = s.wordNgram(text, window_size)
@@ -38,9 +47,15 @@ class Shingling:
         return shingling
 
     def get_module_name(self):
+        """
+        returns the module name
+        """
         return "Shingling Library"
 
     def get_info(self):
+        """
+        returns more info on the module.
+        """
         return "Shingling Library for English and Indian languages"
 
 
