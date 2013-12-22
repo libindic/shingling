@@ -37,6 +37,8 @@
                           output.append($("<li>").text(item));
                       });
                       idResult.html(output).show();
+                  } else {
+                    idError.html("No result found").show();
                   }
               },
               error: function(msg) {
@@ -50,40 +52,46 @@
 {% endblock %}
 
 {% block content%}
-<div class="well">  <h2>Indic W-shingling Library</h2></hr>
-    <h4>What is W-shingling?</h4>
-    <p>
-      a w-shingling is a set of unique "shingles"—contiguous subsequences of tokens in a document—that can be used to gauge the similarity of two documents. The w denotes the number of tokens in each shingle in the set.
-    </p>
-    <!-- <p>If you want to use this library in your program , you may refer the JSON-RPC based <a href="apis.html">API documentation.</a></p> -->
-    <a href="http://en.wikipedia.org/wiki/W-shingling">Read more about W-shingling</a>
-    <h4>Supported Languages</h4>
-    <p>English, Hindi, Malayalam, Kannada,  Bengali</p>
-    <p>Enter the text for  getting the w-shingling below.
-      Language of each  word will be detected.    You can give the text in any language and even with mixed language.
-    </p>
-    <form >
-      <p align="center">
-        <input type="text"  name='text' id='text' value="a rose is a rose is a rose" style="width:25em;"></textarea>
-</p><p align="center">
-  W : <input type="text"  name='n' id='n' value ="2" style="width:5em;"></textarea>
-<input  type="submit" class="btn" id="ngram" value="Submit"  name="action" style="width:12em;"/>
-</p>
-</form>
-<hr/>
-<div class="hide alert alert-info " id="progress"></div>
-<div class="hide alert alert-error " id="error"></div>
-<div class="hide " id="result"></div></div>
-<div class="well"><h3>Python Wshingling API</h3>
-This service provides indic w-shingling libraries
-<ul>
-  <li>Method: modules.Shingling.wshingling
-    <ul>
-      <li>arg1 : the  sentence</li>
-      <li>w :  w of w-shingling (Optional)</li>
-      <li>Return : The w-shingling for the sentence</li>
-    </ul></div>
-  </li>
-</ul>
+<div class="page-header">
+    <h1>Indic W-shingling Library</h1>
+</div>
 
-  {% endblock %}
+<h4>What is W-shingling?</h4>
+<p>a w-shingling is a set of unique "shingles"—contiguous subsequences of tokens in a document—that can be used to gauge the similarity of two documents. The w denotes the number of tokens in each shingle in the set.</p>
+<a href="http://en.wikipedia.org/wiki/W-shingling">Read more about W-shingling</a>
+
+<h4>Supported Languages</h4>
+<p>English, Hindi, Malayalam, Kannada,  Bengali</p>
+<p>Enter the text for  getting the w-shingling below. Language of each  word will be detected. You can give the text in any language and even with mixed language.</p>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <textarea type="text"  name='text' id='text' class="form-control">a rose is a rose is a rose</textarea>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-1" for="n">W</label>
+        <div class="col-sm-2">
+            <input type="text"  name='n' id='n' value ="2" class="form-control col-sm-1"/>
+        </div>
+        <input type="submit" class="btn btn-default" id="ngram" value="Submit"  name="action"/>
+    </div>
+</form>
+
+<div class="silpa-hide alert alert-info" id="progress"></div>
+<div class="silpa-hide alert alert-danger" id="error"></div>
+<div class="silpa-hide" id="result"></div>
+<hr/>
+<div class="well">
+    <h3>Python Wshingling API</h3>
+    This service provides indic w-shingling libraries
+    <ul>
+      <li>Method: modules.Shingling.wshingling
+        <ul>
+          <li>arg1 : the  sentence</li>
+          <li>w :  w of w-shingling (Optional)</li>
+          <li>Return : The w-shingling for the sentence</li>
+        </ul>
+      </li>
+    </ul>
+</div>
+{% endblock %}
