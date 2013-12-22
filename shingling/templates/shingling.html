@@ -1,56 +1,52 @@
 {% extends 'silpa.html'%}
+
 {% block modulescript %}
 <script type="text/javascript">
   $(document).ready(function(){
-  $("form").submit(function(event){
-  event.preventDefault();
-  fetch(this)
+      $("form").submit(function(event){
+          event.preventDefault();
+          var jsonRequest = {
+              method: "shingling.wshingling",
+              params: [
+                this.text.value,
+                this.n.value
+              ],
+              id: ""
+            },
+            idProgress = $("#progress"),
+            idError = $("#error"),
+            idResult = $("#result");
+
+          $.ajax({
+              type: "POST",
+              contentType: "application/json; charset=utf-8",
+              url: "JSONRPC",
+              data: JSON.stringify(jsonRequest),
+              dataType: "json",
+              beforeSend:function(){
+                  idError.hide();
+                  idResult.hide();
+                  idProgress.html("Please Wait...");
+              },
+              success: function(msg) {
+                  idProgress.hide();
+                  var result = msg.result || [];
+                  if(result.length != 0){
+                      var output = $("<ul>");
+                      $.each(result, function(index, item){
+                          output.append($("<li>").text(item));
+                      });
+                      idResult.html(output).show();
+                  }
+              },
+              error: function(msg) {
+                  idError.html("Something went wrong...").show();
+                  idProgress.hide();
+              }
+          });
+      });
   });
-
-  });
-
-  function fetch(form)
-  {
-  var text= form.text.value;
-  var n= form.n.value;
-  var jsonRequest = {
-  "method" :  "shingling.wshingling",
-  "params" : [text,n],
-  "id" : ""
-  };
-
-  $.ajax({
-  type: "POST",
-  contentType: "application/json; charset=utf-8",
-  url: "JSONRPC",
-  data: JSON.stringify(jsonRequest),
-  dataType: "json",
-  beforeSend:function(){
-  $("#error").hide();
-  $("#result").hide();
-  $('#progress') .html("Please Wait...");
-
-  },
-
-  success: function(msg) {
-  $('#progress').hide();
-  var resultObj = eval(msg.result);
-  if(resultObj.length != 0){
-  $('#result').html("<ul id='list'></ul>").show();
-  $.each(resultObj, function(index,item){
-  $('#list').append($( "<li>" +"<span class='label label-info'>" + item + "</span>" +"</li>" ));
-  });
-  }
-  },
-  error: function(msg) {
-  $("#error").html("Something went wrong...").show();
-  $('#progress') .hide();
-
-  }
-  });
-  }
 </script>
-
 {% endblock %}
 
 {% block content%}
@@ -76,7 +72,6 @@
 </form>
 <hr/>
 <div class="hide alert alert-info " id="progress"></div>
-<div class="hide alert alert-success " id="successmessage"></div>
 <div class="hide alert alert-error " id="error"></div>
 <div class="hide " id="result"></div></div>
 <div class="well"><h3>Python Wshingling API</h3>
