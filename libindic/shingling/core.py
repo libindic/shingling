@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#===============================================================================
+# =========================================================================
 # Shingling
-#===============================================================================
+# =========================================================================
 # Copyright 2011 Hrishikesh K B <hrishi.kb@gmail.com>
 # http://www.smc.org.in
 #
@@ -27,6 +27,7 @@ class Shingling:
     """
     The shingling class. Instantiate to get access to the  methods.
     """
+
     def wshingling(self, text, window_size=4):
         """
         :param text: Text to be split into shingles.
@@ -38,7 +39,6 @@ class Shingling:
         window_size = int(window_size)
         s = indicngram.getInstance()
         ngrams = s.wordNgram(text, window_size)
-        size = len(ngrams)
         shingling = []
         for x in ngrams:
             if x not in shingling:

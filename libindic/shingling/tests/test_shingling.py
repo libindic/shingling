@@ -13,4 +13,9 @@ class ShinglingTest(TestCase):
         self.shingling = Shingling()
 
     def test_wordShingling(self):
-        self.assertEqual(self.shingling.wshingling(u"ഇത് ഒരു നല്ല കാര്യമാണ് ഇത് ഒരു", 2), [[u"ഇത്", u"ഒരു"], [u"ഒരു", u"നല്ല"], [u"നല്ല", u"കാര്യമാണ്"], [u"കാര്യമാണ്", u"ഇത്"]])
+        self.assertEqual(self.shingling.wshingling(
+            u"ഇത് ഒരു നല്ല കാര്യമാണ് ഇത് ഒരു", 2),
+            [[u"ഇത്", u"ഒരു"],
+             [u"ഒരു", u"നല്ല"],
+             [u"നല്ല", u"കാര്യമാണ്"],
+             [u"കാര്യമാണ്", u"ഇത്"]])
