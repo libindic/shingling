@@ -20,7 +20,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-import indicngram
+from libindic.ngram import Ngram
 
 
 class Shingling:
@@ -37,7 +37,7 @@ class Shingling:
         :returns: text split into shingles.
                 """
         window_size = int(window_size)
-        s = indicngram.getInstance()
+        s = Ngram()
         ngrams = s.wordNgram(text, window_size)
         shingling = []
         for x in ngrams:
