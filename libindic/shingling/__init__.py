@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-from core import getInstance, Shingling
+from .core import getInstance, Shingling
