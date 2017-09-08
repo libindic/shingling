@@ -1,1 +1,1 @@
--e git+https://github.com/libindic/indicngram.git#egg=libindic-ngram
+-e git+https://github.com/libindic/indicngram.git#egg=libindic_ngram
