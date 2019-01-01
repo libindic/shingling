@@ -1,0 +1,98 @@
+{% extends 'silpa.html'%}
+
+{% block modulescript %}
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("form").submit(function(event){
+          event.preventDefault();
+          var jsonRequest = {
+              module: "libindic.shingling",
+              method: "wshingling",
+              params: [
+                this.text.value,
+                this.n.value
+              ],
+              id: ""
+            },
+            idProgress = $("#progress"),
+            idError = $("#error"),
+            idResult = $("#result");
+
+          $.ajax({
+              type: "POST",
+              contentType: "application/json; charset=utf-8",
+              url: "api",
+              data: JSON.stringify(jsonRequest),
+              dataType: "json",
+              beforeSend:function(){
+                  idError.hide();
+                  idResult.hide();
+                  idProgress.html("Please Wait...");
+              },
+              success: function(msg) {
+                  idProgress.hide();
+                  var result = msg.result || [];
+                  if(result.length != 0){
+                      var output = $("<ul>");
+                      $.each(result, function(index, item){
+                          output.append($("<li>").text(item));
+                      });
+                      idResult.html(output).show();
+                  } else {
+                    idError.html("No result found").show();
+                  }
+              },
+              error: function(msg) {
+                  idError.html("Something went wrong...").show();
+                  idProgress.hide();
+              }
+          });
+      });
+  });
+</script>
+{% endblock %}
+
+{% block content%}
+<div class="page-header">
+    <h1>Indic W-shingling Library</h1>
+</div>
+
+<h4>What is W-shingling?</h4>
+<p>a w-shingling is a set of unique "shingles"—contiguous subsequences of tokens in a document—that can be used to gauge the similarity of two documents. The w denotes the number of tokens in each shingle in the set.</p>
+<a href="http://en.wikipedia.org/wiki/W-shingling">Read more about W-shingling</a>
+
+<h4>Supported Languages</h4>
+<p>English, Hindi, Malayalam, Kannada,  Bengali</p>
+<p>Enter the text for  getting the w-shingling below. Language of each  word will be detected. You can give the text in any language and even with mixed language.</p>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <textarea type="text"  name='text' id='text' class="form-control ime">a rose is a rose is a rose</textarea>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-1" for="n">W</label>
+        <div class="col-sm-2">
+            <input type="text"  name='n' id='n' value ="2" class="form-control col-sm-1"/>
+        </div>
+        <input type="submit" class="btn btn-default" id="ngram" value="Submit"  name="action"/>
+    </div>
+</form>
+
+<div class="silpa-hide alert alert-info" id="progress"></div>
+<div class="silpa-hide alert alert-danger" id="error"></div>
+<div class="silpa-hide" id="result"></div>
+<hr/>
+<div class="well">
+    <h3>Python Wshingling API</h3>
+    This service provides indic w-shingling libraries
+    <ul>
+      <li>Method: modules.Shingling.wshingling
+        <ul>
+          <li>arg1 : the  sentence</li>
+          <li>w :  w of w-shingling (Optional)</li>
+          <li>Return : The w-shingling for the sentence</li>
+        </ul>
+      </li>
+    </ul>
+</div>
+{% endblock %}
